@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio Sprint · Je confirme ma place</title>
+<meta name="description" content="Confirmez votre participation au Portfolio Sprint de Women Techmakers Abomey-Calavi, mardi 24 novembre 2026 à 20h, en ligne.">
+<meta name="theme-color" content="#A7D3F0">
+<meta property="og:title" content="Portfolio Sprint · Je confirme ma place">
+<meta property="og:description" content="From Zero to Portfolio. Mardi 24 novembre 2026, 20h à 21h30, en ligne.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Castoro:ital@1&display=swap">
+<style>
+/* Charte WTM : bleu nuit porte le texte, bleu ciel le fond, vert citron l'action, rose en touche. */
+:root{
+  --navy:#1D1349; --lime:#D8E583; --sky:#A7D3F0; --pink:#F59196; --cream:#FAF4EC; --blue:#0030EF;
+  --white:#FFFFFF;
+  --n50:#F4F3F8; --n200:#D6D3E4; --n500:#6E6890; --n700:#3B3366;
+  --sans:"Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif:"Castoro", Georgia, "Times New Roman", serif;
+  --radius:18px;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0}
+body{
+  font-family:var(--sans); color:var(--navy); background:var(--sky);
+  font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+/* Ondes concentriques, comme sur le site du Portfolio Sprint */
+body::before{
+  content:""; position:fixed; inset:-20vmax; z-index:-1; pointer-events:none;
+  background:repeating-radial-gradient(circle at 50% 38%, rgba(255,255,255,.0) 0 26px, rgba(255,255,255,.42) 28px, rgba(255,255,255,0) 31px 54px);
+  animation:breathe 14s ease-in-out infinite alternate;
+}
+@keyframes breathe{from{transform:scale(1)}to{transform:scale(1.06)}}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue); outline-offset:3px; border-radius:6px}
+.wrap{max-width:680px; margin:0 auto; padding-block:calc(env(safe-area-inset-top, 0px) + 20px) 56px}
+
+/* En-tête */
+.top{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:28px}
+.logo{height:40px; width:auto; display:block}
+.logo-fallback{font-weight:700; font-size:15px; line-height:1.1}
+.time-hint{font-size:13px; font-weight:600; background:rgba(255,255,255,.6); padding:6px 12px; border-radius:999px; white-space:nowrap}
+.eyebrow{font-size:13px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; margin:0 0 10px}
+h1{font-size:clamp(40px, 9vw, 64px); line-height:1.02; letter-spacing:-.02em; margin:0; text-wrap:balance; font-weight:700}
+h1 .star{color:var(--pink); font-size:.6em; vertical-align:.25em; margin-left:.1em}
+.theme{display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; margin:16px 0 0}
+.theme .tag{background:var(--lime); font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:6px}
+.theme .name{font-family:var(--serif); font-style:italic; font-size:22px}
+.lead{margin:14px 0 0; color:var(--n700); max-width:56ch}
+
+/* Progression */
+.progress{margin:30px 0 16px}
+.progress-row{display:flex; justify-content:space-between; font-size:14px; font-weight:600; margin-bottom:8px; gap:12px}
+.progress-row span:last-child{color:var(--n700); font-weight:500; text-align:right}
+.bar{height:8px; background:rgba(255,255,255,.65); border-radius:99px; overflow:hidden}
+.bar i{display:block; height:100%; width:25%; background:var(--navy); border-radius:99px; transition:width .5s cubic-bezier(.2,.8,.2,1)}
+
+/* Carte du formulaire */
+.card{background:var(--white); border-radius:24px; padding:28px clamp(18px, 4vw, 36px); box-shadow:0 18px 50px -24px rgba(29,19,73,.45)}
+.step{display:none}
+.step.active{display:block; animation:enter .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes enter{from{opacity:.001; transform:translateY(10px)}to{opacity:1; transform:none}}
+.step h2{font-size:30px; line-height:1.1; letter-spacing:-.02em; margin:0 0 6px}
+.step .sub{margin:0 0 24px; color:var(--n500)}
+.q{margin:0 0 26px; border:0; padding:0; min-width:0}
+.q > label.lbl, .q > legend{display:block; font-weight:600; margin-bottom:10px; padding:0; font-size:17px}
+.req{color:var(--pink); font-weight:700}
+.opt{color:var(--n500); font-weight:400; font-size:14px}
+.hint{font-size:14px; color:var(--n500); margin:-4px 0 10px}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.row2 .q{margin-bottom:0}
+.row2 + .q, .row2{margin-bottom:26px}
+
+input[type=text], input[type=email], input[type=tel], input[type=url], select, textarea{
+  width:100%; font:inherit; color:var(--navy); background:var(--n50);
+  border:2px solid transparent; border-radius:14px; padding:13px 15px; transition:border-color .2s, background .2s;
+}
+textarea{min-height:96px; resize:vertical}
+input:hover, select:hover, textarea:hover{border-color:var(--n200)}
+input:focus, select:focus, textarea:focus{outline:none; border-color:var(--navy); background:var(--white)}
+.counter{font-size:13px; color:var(--n500); text-align:right; margin-top:4px}
+
+/* Choix en cartes et pastilles */
+.choices{display:grid; gap:10px}
+.choices.cols2{grid-template-columns:1fr 1fr}
+.pills{display:flex; flex-wrap:wrap; gap:8px}
+.choice{position:relative; display:block; cursor:pointer}
+.choice input{position:absolute; opacity:0; inset:0; margin:0; cursor:pointer}
+.choice span{
+  display:flex; align-items:center; gap:10px; min-height:52px;
+  padding:12px 16px; border-radius:14px; background:var(--n50); border:2px solid transparent;
+  font-weight:500; transition:background .2s, border-color .2s, transform .15s;
+}
+.choice span::before{
+  content:""; flex:none; width:20px; height:20px; border-radius:50%; border:2px solid var(--n200); background:var(--white);
+  transition:all .2s;
+}
+.choice input[type=checkbox] + span::before{border-radius:6px}
+.choice:hover span{border-color:var(--n200)}
+.choice input:checked + span{background:var(--lime); border-color:var(--navy)}
+.choice input:checked + span::before{border-color:var(--navy); background:var(--navy); box-shadow:inset 0 0 0 4px var(--lime)}
+.choice input[type=checkbox]:checked + span::before{box-shadow:none; background:var(--navy) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='%23D8E583' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.choice input:focus-visible + span{outline:3px solid var(--blue); outline-offset:2px}
+.choice:active span{transform:scale(.98)}
+.choice.disabled{opacity:.45; pointer-events:none}
+.pills .choice span{min-height:44px; padding:9px 14px; border-radius:999px; font-size:15px}
+.pills .choice span::before{display:none}
+.choice small{display:block; font-weight:400; font-size:13px; color:var(--n700)}
+
+/* Encadrés */
+.note{display:flex; gap:12px; align-items:flex-start; background:var(--cream); border-radius:14px; padding:14px 16px; font-size:15px; margin:-12px 0 24px}
+.note b{font-weight:700}
+.note .ico{flex:none; font-size:18px; line-height:1.2; color:var(--pink)}
+.suggest{background:var(--navy); color:rgba(255,255,255,.88); border-radius:18px; padding:18px 20px; margin:0 0 16px}
+.suggest .eyebrow{color:var(--lime); margin-bottom:8px}
+.suggest ul{margin:0; padding:0; list-style:none; display:grid; gap:8px}
+.suggest li b{color:var(--white)}
+.cond{display:none}
+.cond.show{display:block; animation:enter .35s ease}
+
+/* Erreurs */
+.err{display:none; color:#B4232F; font-size:14px; font-weight:600; margin-top:8px}
+.invalid .err{display:block}
+.invalid input, .invalid select, .invalid textarea{border-color:#E0505A; background:#FFF5F5}
+.invalid .choice span{border-color:#F3B4B8}
+.form-err{display:none; background:#FFF0F1; border:2px solid var(--pink); border-radius:14px; padding:14px 16px; margin:0 0 20px; font-weight:500}
+.form-err.show{display:block}
+
+/* Navigation */
+.nav{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:8px; padding-top:20px; border-top:1px solid var(--n200)}
+.btn{
+  font:inherit; font-weight:700; font-size:16px; cursor:pointer; border:0; border-radius:999px;
+  padding:14px 26px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  transition:transform .15s, box-shadow .2s, background .2s; text-decoration:none; color:var(--navy);
+}
+.btn-primary{background:var(--lime); box-shadow:0 0 0 2px var(--navy) inset}
+.btn-primary:hover{transform:translateY(-1px); box-shadow:0 0 0 2px var(--navy) inset, 0 8px 18px -8px rgba(29,19,73,.5)}
+.btn-dark{background:var(--navy); color:var(--white)}
+.btn-ghost{background:transparent; color:var(--navy); padding-left:6px; padding-right:6px}
+.btn-ghost:hover{text-decoration:underline}
+.btn[disabled]{opacity:.6; cursor:wait}
+.btn:active{transform:scale(.98)}
+.spin{width:16px; height:16px; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+
+/* Confirmation */
+.done{text-align:center; padding-block:12px}
+.burst{font-size:64px; color:var(--pink); line-height:1; display:inline-block; animation:pop .9s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes pop{0%{transform:scale(0) rotate(-90deg)}100%{transform:scale(1) rotate(0)}}
+.done h2{font-size:clamp(30px, 7vw, 42px); margin:14px 0 8px}
+.done .sub{margin:0 auto 22px; max-width:46ch}
+.recap{background:var(--sky); border-radius:18px; padding:18px; display:grid; gap:6px; text-align:left; margin:0 0 18px}
+.recap div{display:flex; gap:10px; flex-wrap:wrap}
+.recap dt, .recap .k{font-weight:700; min-width:70px}
+.linkbox{display:flex; gap:8px; align-items:center; background:var(--n50); border-radius:14px; padding:8px 8px 8px 16px; margin:0 0 18px; text-align:left}
+.linkbox code{flex:1; min-width:0; font-family:var(--sans); font-weight:600; overflow-wrap:anywhere; user-select:all}
+.actions{display:flex; flex-wrap:wrap; gap:10px; justify-content:center}
+.tip{margin:22px 0 0; font-family:var(--serif); font-style:italic; font-size:19px}
+
+footer{text-align:center; font-size:13px; color:var(--n700); margin-top:28px}
+
+@media (max-width:520px){
+  .row2, .choices.cols2{grid-template-columns:1fr}
+  .row2{gap:0}
+  .row2 .q{margin-bottom:22px}
+  .card{border-radius:20px}
+  .nav .btn-primary{flex:1}
+}
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{animation:none !important; transition:none !important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <img class="logo" src="https://portfoliosprint-nine.vercel.app/logo.png" alt="Women Techmakers Abomey-Calavi" onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>Women Techmakers<br>Abomey-Calavi</span>'">
+    <span class="time-hint">Environ 3 minutes</span>
+  </header>
+
+  <section aria-labelledby="titre">
+    <p class="eyebrow">Mardi 24 novembre · 20h à 21h30 · En ligne</p>
+    <h1 id="titre">Portfolio Sprint<span class="star" aria-hidden="true">✦</span></h1>
+    <p class="theme"><span class="tag">Thème</span><span class="name">From Zero to Portfolio</span></p>
+    <p class="lead">Confirmez votre place et dites-nous où vous en êtes. Vos réponses nous aident à préparer des exemples et des conseils adaptés à votre profil.</p>
+  </section>
+
+  <div class="progress" id="progress" aria-live="polite">
+    <div class="progress-row"><span id="stepLabel">Étape 1 sur 4</span><span id="stepName">Je confirme ma place</span></div>
+    <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
+  </div>
+
+  <main class="card">
+    <form id="form" novalidate>
+      <div class="form-err" id="formErr" role="alert"></div>
+
+      <!-- Champ piège anti-spam -->
+      <div class="hp" aria-hidden="true">
+        <label for="website">Ne pas remplir</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <!-- ÉTAPE 1 -->
+      <section class="step active" data-step="1" data-name="Je confirme ma place">
+        <h2>Je confirme ma place</h2>
+        <p class="sub">Pour vous envoyer le lien et les rappels.</p>
+
+        <div class="row2">
+          <div class="q" data-field="prenom">
+            <label class="lbl" for="prenom">Prénom <span class="req">*</span></label>
+            <input type="text" id="prenom" name="prenom" autocomplete="given-name" required>
+            <p class="err">Indiquez votre prénom.</p>
+          </div>
+          <div class="q" data-field="nom">
+            <label class="lbl" for="nom">Nom <span class="req">*</span></label>
+            <input type="text" id="nom" name="nom" autocomplete="family-name" required>
+            <p class="err">Indiquez votre nom.</p>
+          </div>
+        </div>
+
+        <div class="q" data-field="email">
+          <label class="lbl" for="email">E-mail <span class="req">*</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
+          <p class="err">Indiquez une adresse e-mail valide, par exemple prenom@gmail.com.</p>
+        </div>
+
+        <div class="q" data-field="whatsapp">
+          <label class="lbl" for="whatsapp">Numéro WhatsApp <span class="req">*</span></label>
+          <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" value="+229 " required>
+          <p class="err">Indiquez votre numéro WhatsApp avec l'indicatif.</p>
+        </div>
+
+        <div class="q" data-field="linkedin">
+          <label class="lbl" for="linkedin">Profil LinkedIn <span class="opt">(facultatif)</span></label>
+          <p class="hint">Pour vous identifier lors du partage de fin de séance.</p>
+          <input type="url" id="linkedin" name="linkedin" placeholder="https://www.linkedin.com/in/votre-profil" inputmode="url">
+          <p class="err">Collez le lien complet de votre profil, qui commence par https://</p>
+        </div>
+
+        <fieldset class="q" data-field="presence">
+          <legend>Serez-vous présente le mardi 24 novembre, de 20h à 21h30 ? <span class="req">*</span></legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="presence" value="Oui, toute la séance"><span>Oui, toute la séance</span></label>
+            <label class="choice"><input type="radio" name="presence" value="Oui, mais je partirai avant la fin"><span>Oui, mais je devrai partir avant la fin</span></label>
+            <label class="choice"><input type="radio" name="presence" value="Absente"><span>Je ne pourrai finalement pas venir</span></label>
+          </div>
+          <p class="err">Choisissez une réponse.</p>
+        </fieldset>
+
+        <div class="cond" id="condAbsente">
+          <div class="note"><span class="ico" aria-hidden="true">✦</span><span>Dommage, mais merci de nous prévenir. Ce n'est que partie remise : d'autres séances arrivent bientôt.</span></div>
+          <fieldset class="q">
+            <legend>Voulez-vous être informée des prochaines séances ?</legend>
+            <div class="choices">
+              <label class="choice"><input type="checkbox" name="infoProchains" value="Oui"><span>Oui, tenez-moi au courant</span></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="cond" id="condPresente">
+          <fieldset class="q" data-field="appareil">
+            <legend>Pendant la séance, vous serez sur : <span class="req">*</span></legend>
+            <div class="choices cols2">
+              <label class="choice"><input type="radio" name="appareil" value="Ordinateur"><span>Un ordinateur</span></label>
+              <label class="choice"><input type="radio" name="appareil" value="Téléphone"><span>Un téléphone seulement</span></label>
+            </div>
+            <p class="err">Choisissez une réponse.</p>
+          </fieldset>
+          <div class="cond" id="condTel">
+            <div class="note"><span class="ico" aria-hidden="true">✦</span><span>Pas de souci. Pour les 30 minutes de travail, un ordinateur est plus confortable si vous pouvez en emprunter un.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÉTAPE 2 -->
+      <section class="step" data-step="2" data-name="Votre situation">
+        <h2>Votre situation</h2>
+        <p class="sub">Pour savoir quel type de portfolio correspond à votre parcours.</p>
+
+        <fieldset class="q" data-field="situation">
+          <legend>Vous êtes : <span class="req">*</span></legend>
+          <div class="choices cols2">
+            <label class="choice"><input type="radio" name="situation" value="Étudiante"><span>Étudiante</span></label>
+            <label class="choice"><input type="radio" name="situation" value="Jeune diplômée"><span>Jeune diplômée<small>en recherche de stage ou d'emploi</small></span></label>
+            <label class="choice"><input type="radio" name="situation" value="En poste"><span>En poste</span></label>
+            <label class="choice"><input type="radio" name="situation" value="En reconversion"><span>En reconversion</span></label>
+            <label class="choice"><input type="radio" name="situation" value="Autre"><span>Autre</span></label>
+          </div>
+          <p class="err">Choisissez votre situation.</p>
+        </fieldset>
+
+        <div class="cond" data-when="Étudiante">
+          <div class="q" data-field="etablissement">
+            <label class="lbl" for="etablissement">Établissement <span class="req">*</span></label>
+            <input type="text" id="etablissement" name="etablissement" placeholder="Ex. : Université d'Abomey-Calavi, IFRI, EPAC">
+            <p class="err">Indiquez votre établissement.</p>
+          </div>
+          <div class="row2">
+            <div class="q" data-field="filiere">
+              <label class="lbl" for="filiere">Filière <span class="req">*</span></label>
+              <input type="text" id="filiere" name="filiere" placeholder="Ex. : Génie logiciel">
+              <p class="err">Indiquez votre filière.</p>
+            </div>
+            <div class="q" data-field="niveauEtudes">
+              <label class="lbl" for="niveauEtudes">Niveau <span class="req">*</span></label>
+              <select id="niveauEtudes" name="niveauEtudes">
+                <option value="">Choisir</option>
+                <option>Licence 1</option><option>Licence 2</option><option>Licence 3</option>
+                <option>Master 1</option><option>Master 2</option><option>BTS</option><option>Autre</option>
+              </select>
+              <p class="err">Choisissez votre niveau.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cond" data-when="Jeune diplômée">
+          <div class="row2">
+            <div class="q" data-field="diplome">
+              <label class="lbl" for="diplome">Diplôme obtenu <span class="req">*</span></label>
+              <input type="text" id="diplome" name="diplome" placeholder="Ex. : Licence">
+              <p class="err">Indiquez votre diplôme.</p>
+            </div>
+            <div class="q" data-field="filiereDiplome">
+              <label class="lbl" for="filiereDiplome">Filière <span class="req">*</span></label>
+              <input type="text" id="filiereDiplome" name="filiereDiplome" placeholder="Ex. : Réseaux et télécoms">
+              <p class="err">Indiquez votre filière.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cond" data-when="En poste">
+          <div class="q" data-field="poste">
+            <label class="lbl" for="poste">Intitulé de votre poste <span class="req">*</span></label>
+            <input type="text" id="poste" name="poste" placeholder="Ex. : Développeuse front-end">
+            <p class="err">Indiquez votre poste.</p>
+          </div>
+          <div class="q">
+            <label class="lbl" for="secteur">Secteur ou entreprise <span class="opt">(facultatif)</span></label>
+            <input type="text" id="secteur" name="secteur">
+          </div>
+          <fieldset class="q" data-field="experience">
+            <legend>Années d'expérience <span class="req">*</span></legend>
+            <div class="pills">
+              <label class="choice"><input type="radio" name="experience" value="Moins d'1 an"><span>Moins d'1 an</span></label>
+              <label class="choice"><input type="radio" name="experience" value="1 à 3 ans"><span>1 à 3 ans</span></label>
+              <label class="choice"><input type="radio" name="experience" value="Plus de 3 ans"><span>Plus de 3 ans</span></label>
+            </div>
+            <p class="err">Choisissez une réponse.</p>
+          </fieldset>
+        </div>
+
+        <div class="cond" data-when="En reconversion">
+          <div class="row2">
+            <div class="q" data-field="domaineOrigine">
+              <label class="lbl" for="domaineOrigine">Domaine d'origine <span class="req">*</span></label>
+              <input type="text" id="domaineOrigine" name="domaineOrigine" placeholder="Ex. : Comptabilité">
+              <p class="err">Indiquez votre domaine d'origine.</p>
+            </div>
+            <div class="q" data-field="domaineVise">
+              <label class="lbl" for="domaineVise">Domaine visé <span class="req">*</span></label>
+              <input type="text" id="domaineVise" name="domaineVise" placeholder="Ex. : Analyse de données">
+              <p class="err">Indiquez le domaine visé.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cond" data-when="Autre">
+          <div class="q" data-field="situationAutre">
+            <label class="lbl" for="situationAutre">Précisez <span class="req">*</span></label>
+            <input type="text" id="situationAutre" name="situationAutre">
+            <p class="err">Précisez votre situation.</p>
+          </div>
+        </div>
+
+        <fieldset class="q" data-field="domaines">
+          <legend>Votre domaine dans la tech <span class="req">*</span></legend>
+          <p class="hint">Plusieurs choix possibles.</p>
+          <div class="pills">
+            <label class="choice"><input type="checkbox" name="domaines" value="Développement web"><span>Développement web</span></label>
+            <label class="choice"><input type="checkbox" name="domaines" value="Développement mobile"><span>Développement mobile</span></label>
+            <label class="choice"><input type="checkbox" name="domaines" value="Data, IA, Machine Learning"><span>Data, IA, Machine Learning</span></label>
+            <label class="choice"><input type="checkbox" name="domaines" value="Design UX/UI"><span>Design UX/UI</span></label>
+            <label class="choice"><input type="checkbox" name="domaines" value="Cybersécurité"><span>Cybersécurité</span></label>
+            <label class="choice"><input type="checkbox" name="domaines" value="Gestion de projet"><span>Gestion de projet</span></label>
+            <label class="choice"><input type="checkbox" name="domaines" value="Marketing digital"><span>Marketing digital</span></label>
+            <label class="choice"><input type="checkbox" name="domaines" value="Autre"><span>Autre</span></label>
+          </div>
+          <p class="err">Choisissez au moins un domaine.</p>
+        </fieldset>
+        <div class="cond" id="condDomaineAutre">
+          <div class="q" data-field="domaineAutre">
+            <label class="lbl" for="domaineAutre">Quel autre domaine ? <span class="req">*</span></label>
+            <input type="text" id="domaineAutre" name="domaineAutre">
+            <p class="err">Précisez votre domaine.</p>
+          </div>
+        </div>
+
+        <fieldset class="q" data-field="niveau">
+          <legend>Votre niveau dans ce domaine <span class="req">*</span></legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="niveau" value="Je débute"><span>Je débute</span></label>
+            <label class="choice"><input type="radio" name="niveau" value="Je me débrouille"><span>Je me débrouille</span></label>
+            <label class="choice"><input type="radio" name="niveau" value="Je suis à l'aise"><span>Je suis à l'aise</span></label>
+          </div>
+          <p class="err">Choisissez votre niveau.</p>
+        </fieldset>
+      </section>
+
+      <!-- ÉTAPE 3 -->
+      <section class="step" data-step="3" data-name="Votre portfolio">
+        <h2>Votre portfolio</h2>
+        <p class="sub">Aucune mauvaise réponse : on part de là où vous en êtes.</p>
+
+        <fieldset class="q" data-field="etatPortfolio">
+          <legend>Aujourd'hui, votre portfolio, c'est : <span class="req">*</span></legend>
+          <div class="choices cols2">
+            <label class="choice"><input type="radio" name="etatPortfolio" value="Pas encore"><span>Je n'en ai pas encore</span></label>
+            <label class="choice"><input type="radio" name="etatPortfolio" value="Une idée"><span>J'ai une idée, rien de concret</span></label>
+            <label class="choice"><input type="radio" name="etatPortfolio" value="En cours"><span>Il est en cours</span></label>
+            <label class="choice"><input type="radio" name="etatPortfolio" value="Existe, à améliorer"><span>Il existe, je veux l'améliorer</span></label>
+          </div>
+          <p class="err">Choisissez une réponse.</p>
+        </fieldset>
+
+        <div class="cond" id="condLienPortfolio">
+          <div class="q" data-field="lienPortfolio">
+            <label class="lbl" for="lienPortfolio">Lien vers votre portfolio <span class="opt">(facultatif)</span></label>
+            <input type="url" id="lienPortfolio" name="lienPortfolio" placeholder="https://" inputmode="url">
+            <p class="err">Collez un lien complet, qui commence par https://</p>
+          </div>
+        </div>
+
+        <fieldset class="q" data-field="nbProjets">
+          <legend>Combien de projets pourriez-vous déjà montrer ? <span class="req">*</span></legend>
+          <div class="pills">
+            <label class="choice"><input type="radio" name="nbProjets" value="Aucun"><span>Aucun pour l'instant</span></label>
+            <label class="choice"><input type="radio" name="nbProjets" value="1 ou 2"><span>1 ou 2</span></label>
+            <label class="choice"><input type="radio" name="nbProjets" value="3 ou plus"><span>3 ou plus</span></label>
+          </div>
+          <p class="err">Choisissez une réponse.</p>
+        </fieldset>
+        <div class="cond" id="condAucunProjet">
+          <div class="note"><span class="ico" aria-hidden="true">✦</span><span>Aucun projet ? Ce n'est pas un problème. Le thème de la séance, c'est justement <b>From Zero to Portfolio</b>.</span></div>
+        </div>
+
+        <fieldset class="q">
+          <legend>Quels types de projets ? <span class="opt">(plusieurs choix possibles)</span></legend>
+          <div class="pills">
+            <label class="choice"><input type="checkbox" name="typesProjets" value="Projets d'école"><span>Projets d'école</span></label>
+            <label class="choice"><input type="checkbox" name="typesProjets" value="Projets personnels"><span>Projets personnels</span></label>
+            <label class="choice"><input type="checkbox" name="typesProjets" value="Stage"><span>Stage</span></label>
+            <label class="choice"><input type="checkbox" name="typesProjets" value="Freelance"><span>Freelance</span></label>
+            <label class="choice"><input type="checkbox" name="typesProjets" value="Hackathon"><span>Hackathon</span></label>
+            <label class="choice"><input type="checkbox" name="typesProjets" value="Bénévolat ou association"><span>Bénévolat ou association</span></label>
+          </div>
+        </fieldset>
+
+        <div class="suggest" id="suggestBox" aria-live="polite">
+          <p class="eyebrow">Dans votre domaine, on voit souvent</p>
+          <ul id="suggestList"></ul>
+        </div>
+
+        <fieldset class="q" data-field="formats">
+          <legend>Quel format de portfolio vous correspond le mieux ? <span class="req">*</span></legend>
+          <p class="hint">Plusieurs choix possibles.</p>
+          <div class="pills" id="formatPills"></div>
+          <p class="err">Choisissez au moins un format, ou « Je ne sais pas encore ».</p>
+        </fieldset>
+
+        <fieldset class="q" data-field="objectif">
+          <legend>Votre objectif principal <span class="req">*</span></legend>
+          <div class="choices cols2">
+            <label class="choice"><input type="radio" name="objectif" value="Décrocher un stage"><span>Décrocher un stage</span></label>
+            <label class="choice"><input type="radio" name="objectif" value="Décrocher un emploi"><span>Décrocher un emploi</span></label>
+            <label class="choice"><input type="radio" name="objectif" value="Missions freelance"><span>Trouver des missions freelance</span></label>
+            <label class="choice"><input type="radio" name="objectif" value="Gagner en visibilité"><span>Gagner en visibilité</span></label>
+          </div>
+          <p class="err">Choisissez votre objectif.</p>
+        </fieldset>
+      </section>
+
+      <!-- ÉTAPE 4 -->
+      <section class="step" data-step="4" data-name="Vos besoins">
+        <h2>Vos besoins</h2>
+        <p class="sub">Pour que la séance réponde vraiment à vos questions.</p>
+
+        <fieldset class="q" data-field="blocages">
+          <legend>Ce qui vous bloque le plus <span class="req">*</span></legend>
+          <p class="hint" id="blocHint">3 choix maximum · 0 sur 3</p>
+          <div class="pills" id="blocPills">
+            <label class="choice"><input type="checkbox" name="blocages" value="Je ne sais pas quoi montrer"><span>Je ne sais pas quoi montrer</span></label>
+            <label class="choice"><input type="checkbox" name="blocages" value="Pas assez de projets"><span>Je n'ai pas assez de projets</span></label>
+            <label class="choice"><input type="checkbox" name="blocages" value="Présenter un projet"><span>Je ne sais pas présenter un projet</span></label>
+            <label class="choice"><input type="checkbox" name="blocages" value="Le design"><span>Le design de mon portfolio</span></label>
+            <label class="choice"><input type="checkbox" name="blocages" value="La mise en ligne"><span>La mise en ligne</span></label>
+            <label class="choice"><input type="checkbox" name="blocages" value="Le manque de temps"><span>Le manque de temps</span></label>
+            <label class="choice"><input type="checkbox" name="blocages" value="Je doute de mon niveau"><span>Je doute de mon niveau</span></label>
+            <label class="choice"><input type="checkbox" name="blocages" value="Autre"><span>Autre</span></label>
+          </div>
+          <p class="err">Choisissez entre 1 et 3 réponses.</p>
+        </fieldset>
+        <div class="cond" id="condBlocAutre">
+          <div class="q" data-field="blocageAutre">
+            <label class="lbl" for="blocageAutre">Précisez <span class="req">*</span></label>
+            <input type="text" id="blocageAutre" name="blocageAutre">
+            <p class="err">Précisez ce qui vous bloque.</p>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="lbl" for="attentes">Avec quoi voulez-vous repartir à 21h30 ? <span class="opt">(facultatif)</span></label>
+          <textarea id="attentes" name="attentes" maxlength="200" placeholder="Ex. : un plan clair pour mon portfolio et deux projets à mettre en avant"></textarea>
+          <div class="counter"><span id="attCount">0</span> / 200</div>
+        </div>
+
+        <div class="q">
+          <label class="lbl" for="questionIntervenante">Une question pour Nelxie ADISSO, notre intervenante ? <span class="opt">(facultatif)</span></label>
+          <textarea id="questionIntervenante" name="questionIntervenante" maxlength="400"></textarea>
+        </div>
+
+        <fieldset class="q" data-field="roue">
+          <legend>Acceptez-vous d'être tirée au sort sur la roue pour présenter votre plan ou votre travail pendant la séance ? <span class="req">*</span></legend>
+          <div class="choices cols2">
+            <label class="choice"><input type="radio" name="roue" value="Oui"><span>Oui, avec plaisir</span></label>
+            <label class="choice"><input type="radio" name="roue" value="Non"><span>Je préfère écouter cette fois</span></label>
+          </div>
+          <p class="err">Choisissez une réponse.</p>
+        </fieldset>
+
+        <fieldset class="q">
+          <legend>Souhaitez-vous un suivi après la séance ? <span class="opt">(relecture de votre portfolio, mentoring)</span></legend>
+          <div class="choices cols2">
+            <label class="choice"><input type="radio" name="suivi" value="Oui"><span>Oui</span></label>
+            <label class="choice"><input type="radio" name="suivi" value="Non"><span>Non, merci</span></label>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- Consentements (étape finale, ou étape 1 si absente) -->
+      <div id="consents" class="cond">
+        <fieldset class="q" data-field="consentData">
+          <legend>Pour finir</legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="consentData" value="Oui"><span>J'accepte que WTM Abomey-Calavi utilise ces informations pour préparer la séance et me contacter à son sujet. <span class="req">*</span></span></label>
+            <label class="choice" id="consentPhotoWrap"><input type="checkbox" name="consentPhoto" value="Oui"><span>J'accepte d'apparaître sur les captures d'écran partagées après l'événement.</span></label>
+            <label class="choice"><input type="checkbox" name="consentInfo" value="Oui"><span>Je souhaite être informée des prochains événements WTM Abomey-Calavi.</span></label>
+          </div>
+          <p class="err">Ce consentement est nécessaire pour enregistrer vos réponses.</p>
+        </fieldset>
+      </div>
+
+      <div class="nav">
+        <button type="button" class="btn btn-ghost" id="prevBtn" hidden>← Retour</button>
+        <span></span>
+        <button type="submit" class="btn btn-primary" id="nextBtn">Continuer →</button>
+      </div>
+    </form>
+
+    <!-- Confirmation -->
+    <section class="done" id="done" hidden aria-live="polite">
+      <span class="burst" aria-hidden="true">✦</span>
+      <h2 id="doneTitle">C'est confirmé !</h2>
+      <p class="sub" id="doneSub">Votre place est réservée. Un e-mail de confirmation vient de partir.</p>
+
+      <div id="doneDetails">
+        <dl class="recap">
+          <div><dt>Quand</dt><dd style="margin:0">Mardi 24 novembre 2026, 20h à 21h30 (GMT+1)</dd></div>
+          <div><dt>Où</dt><dd style="margin:0">En ligne, sur Google Meet</dd></div>
+        </dl>
+        <div class="linkbox">
+          <code id="meetLink">https://bit.ly/wtmac2026</code>
+          <button type="button" class="btn btn-dark" id="copyBtn">Copier</button>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" id="gcalBtn" target="_blank" rel="noopener">Ajouter à Google Agenda</a>
+          <button type="button" class="btn btn-dark" id="icsBtn">Autre agenda (.ics)</button>
+          <a class="btn btn-ghost" id="waBtn" target="_blank" rel="noopener">Partager sur WhatsApp</a>
+        </div>
+        <p class="tip">D'ici mardi, notez deux ou trois projets, même petits, dont vous êtes fière.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>Women Techmakers Abomey-Calavi · Portfolio Sprint 2026</footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURATION
+   Collez ici l'URL de votre script Google Apps Script
+   (voir INSTALLATION_GOOGLE_SHEET.md).
+   ============================================================ */
+const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwF0bBNHdpD5LmHw-I7Jfo_wW7Drkl5-sqNStBuaaE7RyOqTDEtsD8frPHTZqW1Z807kQ/exec";
+
+const MEET_LINK = "https://bit.ly/wtmac2026";
+const EVENT = {
+  title: "Portfolio Sprint · WTM Abomey-Calavi",
+  start: "20261124T190000Z", // 20h00 GMT+1
+  end:   "20261124T203000Z", // 21h30 GMT+1
+  details: "From Zero to Portfolio. Lien de la séance : " + MEET_LINK
+};
+
+const FORMATS = {
+  "Développement web": ["Site personnel avec projets en ligne", "Profil GitHub soigné"],
+  "Développement mobile": ["GitHub avec captures et vidéos de démo", "Application publiée ou APK", "Maquettes de l'application"],
+  "Data, IA, Machine Learning": ["GitHub avec notebooks (Kaggle, Colab)", "Études de cas avec données et résultats", "Articles techniques"],
+  "Design UX/UI": ["Behance ou Dribbble", "Site personnel", "Études de cas (problème, démarche, résultat)"],
+  "Cybersécurité": ["Comptes rendus de CTF (writeups)", "Blog technique", "Profil GitHub soigné", "Certifications mises en avant"],
+  "Gestion de projet": ["Études de cas sur Notion ou en PDF", "Résultats chiffrés de projets"],
+  "Marketing digital": ["Études de cas de campagnes avec chiffres", "Portfolio sur Notion ou en PDF"],
+  "Autre": ["Site personnel", "Portfolio sur Notion ou en PDF"]
+};
+const ALWAYS_FORMATS = ["Section « Sélection » de LinkedIn", "Je ne sais pas encore, j'aimerais être conseillée"];
+
+const DRAFT_KEY = "ps-inscription-brouillon";
+const form = document.getElementById("form");
+const steps = [...form.querySelectorAll(".step")];
+let current = 1;
+
+/* ---------- utilitaires ---------- */
+const $ = id => document.getElementById(id);
+const val = name => { const el = form.querySelector(`[name="${name}"]:checked`) || form.querySelector(`[name="${name}"]:not([type=radio]):not([type=checkbox])`); return el ? el.value.trim() : ""; };
+const vals = name => [...form.querySelectorAll(`[name="${name}"]:checked`)].map(i => i.value);
+const show = (el, on) => { if (el) el.classList.toggle("show", !!on); };
+const isAbsent = () => val("presence") === "Absente";
+const totalSteps = () => isAbsent() ? 1 : 4;
+
+/* ---------- logique conditionnelle ---------- */
+function refresh() {
+  const absent = isAbsent();
+  show($("condAbsente"), absent);
+  show($("condPresente"), val("presence") && !absent);
+  show($("condTel"), val("appareil") === "Téléphone");
+
+  const sit = val("situation");
+  form.querySelectorAll(".cond[data-when]").forEach(c => show(c, c.dataset.when === sit));
+  show($("condDomaineAutre"), vals("domaines").includes("Autre"));
+
+  const etat = val("etatPortfolio");
+  show($("condLienPortfolio"), etat === "En cours" || etat === "Existe, à améliorer");
+  show($("condAucunProjet"), val("nbProjets") === "Aucun");
+
+  const blocs = vals("blocages");
+  $("blocHint").textContent = `3 choix maximum · ${blocs.length} sur 3`;
+  form.querySelectorAll('#blocPills .choice').forEach(l => {
+    const i = l.querySelector("input");
+    l.classList.toggle("disabled", blocs.length >= 3 && !i.checked);
+  });
+  show($("condBlocAutre"), blocs.includes("Autre"));
+
+  $("attCount").textContent = $("attentes").value.length;
+
+  // consentements : sur l'étape finale (ou l'étape 1 si absente)
+  const lastStep = totalSteps();
+  show($("consents"), current === lastStep);
+  $("consentPhotoWrap").hidden = absent;
+
+  updateNav();
+}
+
+/* ---------- suggestions de format selon le domaine ---------- */
+function buildFormats() {
+  const doms = vals("domaines");
+  const chosen = new Set(vals("formats"));
+  const list = [];
+  const shown = doms.length ? doms : [];
+  shown.forEach(d => (FORMATS[d] || []).forEach(f => { if (!list.includes(f)) list.push(f); }));
+  ALWAYS_FORMATS.forEach(f => { if (!list.includes(f)) list.push(f); });
+  chosen.forEach(f => { if (!list.includes(f)) list.unshift(f); });
+
+  $("formatPills").innerHTML = "";
+  list.forEach(f => {
+    const l = document.createElement("label");
+    l.className = "choice";
+    const i = document.createElement("input");
+    i.type = "checkbox"; i.name = "formats"; i.value = f; i.checked = chosen.has(f);
+    const s = document.createElement("span"); s.textContent = f;
+    l.append(i, s);
+    $("formatPills").append(l);
+  });
+
+  const ul = $("suggestList"); ul.innerHTML = "";
+  if (!shown.length) {
+    $("suggestBox").hidden = true;
+  } else {
+    $("suggestBox").hidden = false;
+    shown.forEach(d => {
+      const li = document.createElement("li");
+      const b = document.createElement("b"); b.textContent = d + " : ";
+      li.append(b, document.createTextNode((FORMATS[d] || []).join(", ")));
+      ul.append(li);
+    });
+  }
+}
+
+/* ---------- validation ---------- */
+const URL_RE = /^https?:\/\/\S+\.\S+/i;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function setInvalid(field, bad) {
+  const box = form.querySelector(`[data-field="${field}"]`);
+  if (box) box.classList.toggle("invalid", bad);
+  return bad;
+}
+
+function validateStep(n) {
+  const errors = [];
+  const req = (field, ok) => { if (setInvalid(field, !ok)) errors.push(field); };
+  const visible = field => { const b = form.querySelector(`[data-field="${field}"]`); return b && b.offsetParent !== null; };
+
+  if (n === 1) {
+    req("prenom", val("prenom").length > 0);
+    req("nom", val("nom").length > 0);
+    req("email", EMAIL_RE.test(val("email")));
+    req("whatsapp", val("whatsapp").replace(/\D/g, "").length >= 8);
+    const li = val("linkedin"); req("linkedin", !li || URL_RE.test(li));
+    req("presence", !!val("presence"));
+    if (val("presence") && !isAbsent()) req("appareil", !!val("appareil"));
+  }
+  if (n === 2) {
+    req("situation", !!val("situation"));
+    ["etablissement","filiere","niveauEtudes","diplome","filiereDiplome","poste","domaineOrigine","domaineVise","situationAutre"]
+      .forEach(f => { if (visible(f)) req(f, val(f).length > 0); else setInvalid(f, false); });
+    if (visible("experience")) req("experience", !!val("experience")); else setInvalid("experience", false);
+    req("domaines", vals("domaines").length > 0);
+    if (visible("domaineAutre")) req("domaineAutre", val("domaineAutre").length > 0);
+    req("niveau", !!val("niveau"));
+  }
+  if (n === 3) {
+    req("etatPortfolio", !!val("etatPortfolio"));
+    if (visible("lienPortfolio")) { const l = val("lienPortfolio"); req("lienPortfolio", !l || URL_RE.test(l)); }
+    req("nbProjets", !!val("nbProjets"));
+    req("formats", vals("formats").length > 0);
+    req("objectif", !!val("objectif"));
+  }
+  if (n === 4) {
+    const b = vals("blocages"); req("blocages", b.length >= 1 && b.length <= 3);
+    if (visible("blocageAutre")) req("blocageAutre", val("blocageAutre").length > 0);
+    req("roue", !!val("roue"));
+  }
+  if (n === totalSteps()) req("consentData", vals("consentData").length > 0);
+
+  if (errors.length) {
+    const first = form.querySelector(`[data-field="${errors[0]}"]`);
+    first.scrollIntoView({ behavior: "smooth", block: "center" });
+    const focusable = first.querySelector("input, select, textarea");
+    if (focusable) setTimeout(() => focusable.focus({ preventScroll: true }), 300);
+  }
+  return errors.length === 0;
+}
+
+/* ---------- navigation ---------- */
+function goTo(n) {
+  current = n;
+  steps.forEach(s => s.classList.toggle("active", +s.dataset.step === n));
+  if (n === 3) buildFormats();
+  $("formErr").classList.remove("show");
+  refresh();
+  $("progress").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function updateNav() {
+  const total = totalSteps();
+  $("stepLabel").textContent = `Étape ${current} sur ${total}`;
+  $("stepName").textContent = steps[current - 1].dataset.name;
+  $("barFill").style.width = (current / total * 100) + "%";
+  $("prevBtn").hidden = current === 1;
+  $("nextBtn").innerHTML = current === total
+    ? (isAbsent() ? "Envoyer ma réponse" : "Je confirme ma place ✦")
+    : "Continuer →";
+}
+
+$("prevBtn").addEventListener("click", () => goTo(current - 1));
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  if (!validateStep(current)) return;
+  if (current < totalSteps()) { goTo(current + 1); return; }
+  send();
+});
+
+form.addEventListener("input", e => {
+  const box = e.target.closest("[data-field]");
+  if (box && box.classList.contains("invalid")) box.classList.remove("invalid");
+  if (e.target.name === "domaines" && current === 3) buildFormats();
+  refresh(); saveDraft();
+});
+form.addEventListener("change", () => { refresh(); saveDraft(); });
+
+/* ---------- brouillon local ---------- */
+function collect() {
+  const data = {};
+  const multi = ["domaines", "typesProjets", "formats", "blocages"];
+  new FormData(form).forEach((v, k) => {
+    if (multi.includes(k)) (data[k] = data[k] || []).push(v);
+    else data[k] = typeof v === "string" ? v.trim() : v;
+  });
+  multi.forEach(k => { data[k] = (data[k] || []).join(" ; "); });
+  return data;
+}
+function saveDraft() {
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ data: collect(), step: current })); } catch (_) {}
+}
+function loadDraft() {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch (_) {}
+  if (!saved || !saved.data) return;
+  const d = saved.data;
+  Object.entries(d).forEach(([k, v]) => {
+    if (k === "website" || k === "formats") return;
+    const els = form.querySelectorAll(`[name="${k}"]`);
+    els.forEach(el => {
+      if (el.type === "radio") el.checked = el.value === v;
+      else if (el.type === "checkbox") el.checked = String(v).split(" ; ").includes(el.value);
+      else el.value = v;
+    });
+  });
+  buildFormats();
+  if (d.formats) form.querySelectorAll('[name="formats"]').forEach(i => { i.checked = d.formats.split(" ; ").includes(i.value); });
+}
+
+/* ---------- envoi ---------- */
+async function send() {
+  const btn = $("nextBtn");
+  const errBox = $("formErr");
+  errBox.classList.remove("show");
+
+  if (form.website.value) { showDone(); return; } // robot : on ne fait rien
+
+  if (!SHEETS_ENDPOINT) {
+    errBox.textContent = "Le formulaire n'est pas encore relié au Google Sheet. Ajoutez l'URL du script dans SHEETS_ENDPOINT (voir le guide d'installation).";
+    errBox.classList.add("show"); errBox.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  const data = collect();
+  delete data.website;
+  data.envoyeLe = new Date().toISOString();
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin" aria-hidden="true"></span> Envoi en cours';
+
+  try {
+    const res = await fetch(SHEETS_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data),
+      redirect: "follow"
+    });
+    let ok = res.ok;
+    try { const j = await res.json(); ok = j.ok !== false; if (!ok && j.error) throw new Error(j.error); } catch (inner) { if (inner.message && !ok) throw inner; }
+    if (!ok) throw new Error("Réponse inattendue du serveur.");
+    try { localStorage.removeItem(DRAFT_KEY); } catch (_) {}
+    showDone();
+  } catch (err) {
+    errBox.textContent = "L'envoi n'a pas abouti. Vérifiez votre connexion internet, puis appuyez de nouveau sur le bouton. Vos réponses sont conservées.";
+    errBox.classList.add("show"); errBox.scrollIntoView({ behavior: "smooth", block: "center" });
+  } finally {
+    btn.disabled = false; updateNav();
+  }
+}
+
+/* ---------- confirmation ---------- */
+function showDone() {
+  const prenom = val("prenom");
+  form.hidden = true;
+  $("progress").hidden = true;
+  $("done").hidden = false;
+  if (isAbsent()) {
+    $("doneTitle").textContent = `Merci${prenom ? ", " + prenom : ""} !`;
+    $("doneSub").textContent = "Votre réponse est bien enregistrée. À très bientôt pour une prochaine séance.";
+    $("doneDetails").hidden = true;
+  } else {
+    $("doneTitle").textContent = `C'est confirmé${prenom ? ", " + prenom : ""} !`;
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+$("gcalBtn").href = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+  + "&text=" + encodeURIComponent(EVENT.title)
+  + "&dates=" + EVENT.start + "/" + EVENT.end
+  + "&details=" + encodeURIComponent(EVENT.details)
+  + "&location=" + encodeURIComponent(MEET_LINK);
+
+$("icsBtn").addEventListener("click", () => {
+  const ics = [
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//WTM Abomey-Calavi//Portfolio Sprint//FR", "BEGIN:VEVENT",
+    "UID:portfolio-sprint-2026@wtm-abomey-calavi", "DTSTAMP:" + EVENT.start,
+    "DTSTART:" + EVENT.start, "DTEND:" + EVENT.end,
+    "SUMMARY:" + EVENT.title, "DESCRIPTION:" + EVENT.details, "LOCATION:" + MEET_LINK,
+    "BEGIN:VALARM", "TRIGGER:-PT1H", "ACTION:DISPLAY", "DESCRIPTION:Portfolio Sprint dans 1 heure", "END:VALARM",
+    "END:VEVENT", "END:VCALENDAR"
+  ].join("\r\n");
+  const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+  const a = document.createElement("a"); a.href = url; a.download = "portfolio-sprint.ics";
+  document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+
+$("waBtn").href = "https://wa.me/?text=" + encodeURIComponent("J'ai confirmé ma place au Portfolio Sprint de WTM Abomey-Calavi, mardi 24 novembre à 20h. Inscris-toi aussi : " + location.href);
+
+$("copyBtn").addEventListener("click", async () => {
+  const b = $("copyBtn");
+  try { await navigator.clipboard.writeText(MEET_LINK); b.textContent = "Copié"; }
+  catch (_) { const r = document.createRange(); r.selectNodeContents($("meetLink")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Sélectionné"; }
+  setTimeout(() => b.textContent = "Copier", 2000);
+});
+
+/* ---------- démarrage ---------- */
+loadDraft();
+buildFormats();
+refresh();
+</script>
+</body>
+</html>
